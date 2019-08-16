@@ -62,9 +62,40 @@ ELSE'其他' END
 
 **1.将已有编号方式转化为新的方式并统计**
 
-例如，知道各个省的人口，现在要统计东北、华北、华中的人口
+例如，知道各个省的人口，现在要统计东北、华北、华中的人口，以书中的例子来说明，如下：
 
+![001](https://github.com/winfredzen/JavaEE-Basic/blob/master/MySQL/images/001.png)
 
+> 德岛、香川、爱媛、高知属于四国，福冈、佐贺、长崎属于九州
+
+使用CASE语句
+
+```mysql
+-- 把县编号转换成地区编号
+SELECT CASE pref_name
+	WHEN '德岛' THEN '四国'
+	WHEN '香川' THEN '四国' 
+	WHEN '爱媛' THEN '四国' 
+	WHEN '高知' THEN '四国' 
+	WHEN '福冈' THEN '九州' 
+	WHEN '佐贺' THEN '九州' 
+	WHEN '长崎' THEN '九州' 
+	ELSE '其它'
+	END AS district,
+	SUM(population)
+FROM pop_tbl
+GROUP BY 
+	CASE pref_name
+	WHEN '德岛' THEN '四国'
+	WHEN '香川' THEN '四国' 
+	WHEN '爱媛' THEN '四国' 
+	WHEN '高知' THEN '四国' 
+	WHEN '福冈' THEN '九州' 
+	WHEN '佐贺' THEN '九州' 
+	WHEN '长崎' THEN '九州' 
+	ELSE '其它'
+	END;
+```
 
 
 
