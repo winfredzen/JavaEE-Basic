@@ -47,7 +47,7 @@ ELSE '其他' END
 
 这两种写法的执行结果是相同的
 
-**注意**：在发现为真的WHEN子句时，CASE表达式的真假值判断就会停止，而剩余的WHEN子句会被忽略。
+**注意**：在发现WHEN子句为真时，CASE表达式的真假值判断就会停止，而剩余的WHEN子句会被忽略。
 
 ```mysql
 -- 例如，这样写的话，结果里不会出现“第二”
@@ -97,7 +97,27 @@ GROUP BY
 	END;
 ```
 
+> 关键是将SELECT子句中的CASE表达式复制到GROUP BY子句
 
+同样，可以将数值按适当的级别进行分类。例如，按人口数量等级：
+
+```mysql
+SELECT CASE WHEN population < 100 THEN '01'
+							WHEN population >= 100 AND population < 200 THEN '02'
+							WHEN population >= 200 AND population < 300 THEN '03'
+							WHEN population >= 300 THEN '04'
+				 ELSE NULL END AS pop_class,
+				 COUNT(*) AS cnt
+FROM pop_tbl
+GROUP BY  
+CASE WHEN population < 100 THEN '01'
+							WHEN population >= 100 AND population < 200 THEN '02'
+							WHEN population >= 200 AND population < 300 THEN '03'
+							WHEN population >= 300 THEN '04'
+				 ELSE NULL END;
+```
+
+![002](https://github.com/winfredzen/JavaEE-Basic/blob/master/MySQL/images/002.png)
 
 
 
