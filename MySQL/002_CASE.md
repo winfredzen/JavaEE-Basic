@@ -179,6 +179,85 @@ GROUP BY pref_name;
 
 
 
+**3.用CHECK约束定义多个列的条件关系**
+
+
+
+**4.在UPDATE语句里进行条件分支**
+
+
+
+**5.表之间的数据匹配**
+
+在CASE表达式里，可以使用BETWEEN、LIKE和<、>等便利的谓词组合，以及能嵌套子查询的IN和EXISTS谓词
+
+如下，有一张课程一览表和一张管理每个月所设课程的表
+
+![004](https://github.com/winfredzen/JavaEE-Basic/blob/master/MySQL/images/004.png)
+
+![005](https://github.com/winfredzen/JavaEE-Basic/blob/master/MySQL/images/005.png)
+
+需要这两张表生成如下的交叉表，用于知道每个与开设的课程
+
+![006](https://github.com/winfredzen/JavaEE-Basic/blob/master/MySQL/images/006.png)
+
+使用CASE表达式
+
+```mysql
+-- 使用IN谓词
+SELECT CM.course_name,
+       CASE WHEN CM.course_id IN 
+                    (SELECT course_id FROM OpenCourses 
+                      WHERE month = 200706) THEN '○'
+            ELSE '×' END AS "6月",
+       CASE WHEN CM.course_id IN 
+                    (SELECT course_id FROM OpenCourses
+                      WHERE month = 200707) THEN '○'
+            ELSE '×' END AS "7月",
+       CASE WHEN CM.course_id IN 
+                    (SELECT course_id FROM OpenCourses
+                      WHERE month = 200708) THEN '○'
+            ELSE '×' END  AS "8月"
+  FROM CourseMaster CM;
+```
+
+```mysql
+-- 使用EXISTS谓词
+SELECT CM.course_name,
+       CASE WHEN EXISTS
+                    (SELECT course_id FROM OpenCourses OC
+                      WHERE month = 200706
+                        AND CM.course_id = OC.course_id) THEN '○'
+            ELSE '×' END AS "6月",
+       CASE WHEN EXISTS
+                    (SELECT course_id FROM OpenCourses OC
+                      WHERE month = 200707
+                        AND CM.course_id = OC.course_id) THEN '○'
+            ELSE '×' END AS "7月",
+       CASE WHEN EXISTS
+                    (SELECT course_id FROM OpenCourses OC
+                      WHERE month = 200708
+                        AND CM.course_id = OC.course_id) THEN '○'
+            ELSE '×' END  AS "8月"
+  FROM CourseMaster CM;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
