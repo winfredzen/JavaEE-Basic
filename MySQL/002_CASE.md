@@ -102,24 +102,80 @@ GROUP BY
 同样，可以将数值按适当的级别进行分类。例如，按人口数量等级：
 
 ```mysql
-SELECT CASE WHEN population < 100 THEN '01'
-							WHEN population >= 100 AND population < 200 THEN '02'
-							WHEN population >= 200 AND population < 300 THEN '03'
-							WHEN population >= 300 THEN '04'
-				 ELSE NULL END AS pop_class,
-				 COUNT(*) AS cnt
+SELECT CASE 
+	WHEN population < 100 THEN '01'
+	WHEN population >= 100 AND population < 200 THEN '02'
+	WHEN population >= 200 AND population < 300 THEN '03'
+	WHEN population >= 300 THEN '04'
+	ELSE NULL END AS pop_class, COUNT(*) AS cnt
 FROM pop_tbl
 GROUP BY  
-CASE WHEN population < 100 THEN '01'
-							WHEN population >= 100 AND population < 200 THEN '02'
-							WHEN population >= 200 AND population < 300 THEN '03'
-							WHEN population >= 300 THEN '04'
-				 ELSE NULL END;
+CASE 
+	WHEN population < 100 THEN '01'
+	WHEN population >= 100 AND population < 200 THEN '02'
+	WHEN population >= 200 AND population < 300 THEN '03'
+	WHEN population >= 300 THEN '04'
+	ELSE NULL END;
 ```
 
 ![002](https://github.com/winfredzen/JavaEE-Basic/blob/master/MySQL/images/002.png)
 
+但，必须在SELECT子句和GROUP BY子句这两处写一样的CASE表达式，有点麻烦。修改的时候，需要同时修改两处。
 
+如下，GROUP BY子句引用了SELECT子句中定义的别名
+
+```mysql
+-- 将CASE表达式归纳到一处
+SELECT CASE pref_name
+	WHEN '德岛' THEN '四国'
+	WHEN '香川' THEN '四国' 
+	WHEN '爱媛' THEN '四国' 
+	WHEN '高知' THEN '四国' 
+	WHEN '福冈' THEN '九州' 
+	WHEN '佐贺' THEN '九州' 
+	WHEN '长崎' THEN '九州' 
+	ELSE '其它'
+	END AS district,
+	SUM(population)
+FROM pop_tbl
+GROUP BY district;
+```
+
+> 严格来说，这样写是违法SQL的规则的。因为GROUP BY子句比SELECT子句先执行，所以GROUP BY子句引用在SELECT子句里定义的别称是不被允许的。
+
+
+
+**2.用一条SQL语句进行不同条件的统计**
+
+如下的例子，知道每个县市的性别人数，然后按性别、县名统计人数
+
+![003](https://github.com/winfredzen/JavaEE-Basic/blob/master/MySQL/images/003.png)
+
+通常的做法是，在WHERE子句里分贝写上不同的条件
+
+```mysql
+-- 男性人口
+SELECT pref_name, SUM(population) FROM PopTbl2 WHERE sex = '1' GROUP BY pref_name;
+
+-- 女性人口
+SELECT pref_name, SUM(population) FROM PopTbl2 WHERE sex = '2' GROUP BY pref_name;
+```
+
+然后使用UNION，但这样做，工作量并没有减少，SQL语句也变的很长。
+
+使用CASE表达式：
+
+```mysql
+SELECT pref_name,
+	SUM(CASE WHEN sex = 1 THEN population ELSE 0 END) AS cnt_m,
+	SUM(CASE WHEN sex = 2 THEN population ELSE 0 END) AS cnt_f
+FROM PopTbl2
+GROUP BY pref_name;
+```
+
+**这里是将行结构数据转换成了列结构数据**
+
+**新手用WHERE自己进行条件分支，高手用SELECT子句进行条件分支**
 
 
 
