@@ -244,23 +244,80 @@ SELECT CM.course_name,
 
 
 
+## 练习题
+
+**1.多列数据的最大值**
+
+在SQL中从多行数据中选出最大值or最小值很容易，通过GROUP BY子句对合适的列进行聚合操作，并使用MAX或MIN聚合函数就可以求出。那从多列数据中选出最大值该怎么办？
+
+如下的数据表：
+
+![007](https://github.com/winfredzen/JavaEE-Basic/blob/master/MySQL/images/007.png)
+
+```mysql
+/* 求x、y和z中的最大值 */
+SELECT keey,
+	CASE 
+		WHEN CASE WHEN x < y THEN y ELSE x END < z THEN z
+    ELSE CASE WHEN x < y THEN y ELSE x END
+  END AS greatest
+FROM example1_1_1;
+```
+
+或者**转换成行格式后使用MAX函数**
+
+```mysql
+/* 转换成行格式后使用MAX函数 */
+SELECT keey, MAX(col) AS greatest
+  FROM (SELECT keey, x AS col FROM example1_1_1
+        UNION ALL
+        SELECT keey, y AS col FROM example1_1_1
+        UNION ALL
+        SELECT keey, z AS col FROM example1_1_1) TMP
+ GROUP BY keey;
+```
+
+或者使用`GREATEST`函数
+
+```mysql
+ SELECT keey, GREATEST(GREATEST(x,y), z) AS greatest
+ FROM example1_1_1;
+```
 
 
 
+**2.转换行列，加入汇总**
 
+使用PopTbl2作为样本数据，把行结构转化成如下的列结构，并加入汇总
 
+![008](https://github.com/winfredzen/JavaEE-Basic/blob/master/MySQL/images/008.png)
 
+```mysql
+/* 转换行列——在表头里加入汇总和再揭(p.287) */
+SELECT sex,
+       SUM(population) AS total,
+       SUM(CASE WHEN pref_name = '德岛' THEN population ELSE 0 END) AS col_1,
+       SUM(CASE WHEN pref_name = '香川' THEN population ELSE 0 END) AS col_2,
+       SUM(CASE WHEN pref_name = '爱媛' THEN population ELSE 0 END) AS col_3,
+       SUM(CASE WHEN pref_name = '高知' THEN population ELSE 0 END) AS col_4,
+       SUM(CASE WHEN pref_name IN ('德岛', '香川', '爱媛', '高知')
+                THEN population ELSE 0 END) AS zaijie
+  FROM PopTbl2
+ GROUP BY sex;
+```
 
+我自己写的：
 
-
-
-
-
-
-
-
-
-
-
-
+```mysql
+SELECT 
+	(CASE WHEN sex = 1 THEN '男' ELSE '女' END) AS '性别',
+	SUM(population) AS '全国',
+	SUM(CASE WHEN pref_name = '德岛' THEN population ELSE 0 END) AS '德岛',
+	SUM(CASE WHEN pref_name = '香川' THEN population ELSE 0 END) AS '香川',
+	SUM(CASE WHEN pref_name = '爱媛' THEN population ELSE 0 END) AS '爱媛',
+	SUM(CASE WHEN pref_name = '高知' THEN population ELSE 0 END) AS '高知',
+	SUM(CASE WHEN pref_name = '德岛' or pref_name = '香川' or pref_name = '爱媛' or pref_name = '高知' THEN population ELSE 0 END) AS '四国'
+FROM PopTbl2
+GROUP BY sex;
+```
 
