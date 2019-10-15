@@ -3,7 +3,6 @@
 参考：
 
 + [Java Concurrency – Difference between yield() and join()](https://howtodoinjava.com/java/multi-threading/difference-between-yield-and-join-in-threads-in-java/)
-+ []()
 
 ```java
 /**
@@ -38,4 +37,61 @@ Thread源代码里对`NORM_PRIORITY` （数值为5） 的注释是“线程默�
 
 
 ## 例子
+
+```java
+package com.wz.thread;
+
+public class YieldTest {
+
+	public static void main(String[] args) {
+
+		Thread producer = new YProducer();
+		Thread consumer = new YConsumer();
+		
+		producer.setPriority(Thread.MIN_PRIORITY);
+		consumer.setPriority(Thread.MAX_PRIORITY);
+
+		producer.start();
+		consumer.start();
+		
+	}
+
+}
+
+class YProducer extends Thread {
+	@Override
+	public void run() {
+		for (int i = 0; i < 5; i++) {
+			System.out.println("I am Producer : Produced Item " + i);
+			Thread.yield();
+		}
+	}
+}
+
+class YConsumer extends Thread {
+	@Override
+	public void run() {
+		for (int i = 0; i < 5; i++) {
+			System.out.println("I am Consumer : Consumed Item " + i);
+			Thread.yield();
+		}
+	}
+}
+```
+
+输出为：
+
+```
+I am Consumer : Consumed Item 0
+I am Producer : Produced Item 0
+I am Consumer : Consumed Item 1
+I am Consumer : Consumed Item 2
+I am Producer : Produced Item 1
+I am Producer : Produced Item 2
+I am Consumer : Consumed Item 3
+I am Producer : Produced Item 3
+I am Producer : Produced Item 4
+I am Consumer : Consumed Item 4
+```
+
 
