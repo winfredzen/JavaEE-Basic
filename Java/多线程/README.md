@@ -5,3 +5,4 @@
 + [sleep](https://github.com/winfredzen/JavaEE-Basic/blob/master/Java/%E5%A4%9A%E7%BA%BF%E7%A8%8B/003_sleep.md)
 + [wait](https://github.com/winfredzen/JavaEE-Basic/blob/master/Java/%E5%A4%9A%E7%BA%BF%E7%A8%8B/004_wait.md)
 + [yield](https://github.com/winfredzen/JavaEE-Basic/blob/master/Java/%E5%A4%9A%E7%BA%BF%E7%A8%8B/005_yield.md)
++ [interrupt](https://github.com/winfredzen/JavaEE-Basic/blob/master/Java/%E5%A4%9A%E7%BA%BF%E7%A8%8B/006_interrupt.md)
