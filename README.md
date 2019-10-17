@@ -4,4 +4,4 @@
 
 + [Snailclimb/JavaGuide](https://github.com/Snailclimb/JavaGuide)
 
-java内存模型 synchronized volatile
+java内存模型 synchronized volatile 线程之间的通信和同步
