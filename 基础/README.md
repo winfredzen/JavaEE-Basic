@@ -1,5 +1,9 @@
 # 基础
 
+**泛型**
+
++ [什么是泛型](https://www.liaoxuefeng.com/wiki/1252599548343744/1265102638843296)
+
 **集合**
 
 + [java中Map及Map.Entry详解](https://blog.csdn.net/yaomingyang/article/details/78748130)
