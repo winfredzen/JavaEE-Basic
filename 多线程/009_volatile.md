@@ -3,6 +3,7 @@
 参考：
 
 + [volatile关键字解析](https://www.cnblogs.com/dolphin0520/p/3920373.html)
++ [Java 并发编程：volatile的使用及其原理](https://www.cnblogs.com/paddix/p/5428507.html)
 
 
 
@@ -11,3 +12,4 @@
 > 　　1）保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。
 >
 > 　　2）禁止进行指令重排序。
+
