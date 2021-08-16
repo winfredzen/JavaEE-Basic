@@ -22,3 +22,11 @@
 **注解**
 
 + [常用注解@Intdef与@Stringdef](https://www.cnblogs.com/mhbs/p/4523457.html)
+
+**接口**
+
++ [Static and Default Methods in Interfaces in Java](https://www.baeldung.com/java-static-default-methods)
+
+
+
+
