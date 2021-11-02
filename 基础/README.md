@@ -29,4 +29,8 @@
 
 
 
+**动态代理**
+
++ [动态代理](https://www.liaoxuefeng.com/wiki/1252599548343744/1264804593397984)
++ [Java的动态代理(dynamic proxy)](https://www.cnblogs.com/techyc/p/3455950.html)
 
