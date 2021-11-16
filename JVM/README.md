@@ -30,7 +30,33 @@
 
 **Java JVM：JIT编译器和解释器**
 
-> 
+> ![001](https://github.com/winfredzen/JavaEE-Basic/blob/master/JVM/images/001.png)
+>
+> Java语言的编译和执行中，均涉及编译器和解释器。
+>
+> 首先，程序员在编写Java程序时，利用Java编译器，将Java语言编译成Java ByteCode；之后，执行过程中需要使用JVM（Java虚拟机）将ByteCode转化为机器代码。对于JVM的设计有两种，**一种使用解释器直接在目标机器上执行**，**一种则是使用JIT编译器**。前者使编译和执行的过程同时进行，对于执行次数比较少的ByteCode来说，此处的编译时间可以忽略不计；而对于频繁执行的ByteCode来说，编译时间是累加的。因此JVM通过统计ByteCode的执行次数来进行优化，其根据执行频率判断是否将ByteCode预先编译成机器代码，以节省时间，提高执行效率。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
