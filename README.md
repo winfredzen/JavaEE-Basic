@@ -12,6 +12,30 @@ java内存模型 synchronized volatile 线程之间的通信和同步
 
 
 
+## Mac Java
+
+Mac电脑上有关Java的一些操作、配置
+
+参考：
+
++ [How to Set $JAVA_HOME environment variable on macOS](https://mkyong.com/java/how-to-set-java_home-environment-variable-on-mac-os-x/)
+
+1.确定终端使用的是`Bash`还是`zsh`
+
+```shell
+echo $SHELL
+```
+
+
+
+2.在Mac OS X 10.5及以后的版本，使用`/usr/libexec/java_home`返回默认JDK的位置
+
+
+
+
+
+
+
 
 
 # 问题集与文章
