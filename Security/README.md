@@ -72,7 +72,23 @@ $ keytool -genkeypair -alias serverkey -keypass 123456 -storepass 123456 \
 
 
 
+再看如下的例子，参考自：
 
++ [Java Keytool工具简介](https://blog.csdn.net/liumiaocn/article/details/61921014)
+
+```shell
+keytool -genkey -alias kstore -keypass init123 -keyalg RSA -keysize 2048 -validity 30 -keystore /tmp/kstore.keystore -storepass init234
+```
+
++ `-keypass` - 指定别名条目的密码(私钥的密码)
+
+
+
+```shell
+keytool -list  -v -keystore /tmp/kstore.keystore -storepass init234
+```
+
+![006](https://github.com/winfredzen/JavaEE-Basic/blob/master/Security/images/006.png)
 
 
 
