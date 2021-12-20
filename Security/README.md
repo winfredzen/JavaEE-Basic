@@ -92,21 +92,15 @@ keytool -list  -v -keystore /tmp/kstore.keystore -storepass init234
 
 
 
+**证书导出**
 
+```shell
+keytool -export -alias kstore -keystore kstore.keystore -file kstore.crt -rfc -storepass init234
+```
 
+生成了`kstore.crt`文件，使用mac下的钥匙串打开，显示如下的内容：
 
-
-
-
-
-
-
-
-
-
-
-
-
+![007](https://github.com/winfredzen/JavaEE-Basic/blob/master/Security/images/007.png)
 
 
 
